@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello
+spec:
+  containers:
+    - name: app
+      image: dontrebootme/microbot:v1
+      ports:
+        - name: web
+          containerPort: 80
