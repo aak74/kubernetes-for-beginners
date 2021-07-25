@@ -19,7 +19,7 @@ kubectl describe nodes master
 kubectl describe nodes
 ```
 
-## 
+## Детальная информация
 - [Конфиг](00-config.md)
 - [Файлы](10-files.md)
 - [get](20-get.md)
