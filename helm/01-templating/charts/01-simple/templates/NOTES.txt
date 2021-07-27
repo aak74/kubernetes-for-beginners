@@ -1,0 +1,6 @@
+---------------------------------------------------------
+
+Content of NOTES.txt appears after deploy.
+Deployed to {{ .Values.namespace }} namespace.
+
+---------------------------------------------------------

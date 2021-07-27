@@ -1,0 +1,8 @@
+apiVersion: v2
+name: simple
+description: A minimal chart for demo
+
+type: application
+
+version: 0.1.0
+appVersion: "1.16.0"
