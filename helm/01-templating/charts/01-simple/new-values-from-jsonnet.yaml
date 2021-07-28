@@ -1,0 +1,15 @@
+---
+{
+  "env": "prod",
+  "namespace": "jsonnet-prod",
+  "resources": {
+    "limit": {
+      "cpu": "400m",
+      "memory": "1024Mb"
+    },
+    "requests": {
+      "cpu": "200m",
+      "memory": "512Mb"
+    }
+  }
+}

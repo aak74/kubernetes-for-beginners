@@ -1,0 +1,13 @@
+{
+  "namespace": "json",
+  "resources": {
+    "limit": {
+      "cpu": "200m",
+      "memory": "512Mb"
+    },
+    "requests": {
+      "cpu": "100m",
+      "memory": "128Mb"
+    }
+  }
+}

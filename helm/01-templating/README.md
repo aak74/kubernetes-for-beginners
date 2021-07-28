@@ -7,13 +7,13 @@
 
 ```shell script
 # Создание чарта first в папке charts
-helm create charts/first
+helm create first
 
 # Сборка ресурсов из шаблона 
-helm template charts/first
+helm template first
 
 # Linter
-helm lint charts/first
+helm lint first
 ```
 
 ## Типы чартов
@@ -29,13 +29,13 @@ helm lint charts/first
 Переменные могут быть переопределены с помощью флага --set. И с помощью другого файла.
 ```shell script
 # Сборка шаблона с переопределением параметра
-helm template --set namespace=demo charts/01-simple
+helm template --set namespace=demo 01-simple
 
 # Сборка шаблона с переопределением двух параметров
-helm template --set namespace=demo,appPort=8080, charts/01-simple
+helm template --set namespace=demo,appPort=8080, 01-simple
 
 # Сборка шаблона с переопределением параметра в файле
-helm template -f charts/01-simple/new-values.yaml charts/01-simple
+helm template -f 01-simple/new-values.yaml 01-simple
 ```
 Способы переопределения переменных могут сочетаться.
   
