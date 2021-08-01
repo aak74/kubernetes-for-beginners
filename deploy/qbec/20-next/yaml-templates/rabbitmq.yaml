@@ -1,0 +1,36 @@
+{{- if eq (printf "%.6s" .Values.global.env) "review") }}
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: rabbitmq
+spec:
+  selector:
+    matchLabels:
+      component: rabbitmq
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        component: rabbitmq
+    spec:
+      containers:
+        - name: rabbitmq
+          image: rabbitmq:3
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: processing
+            - name: RABBITMQ_DEFAULT_PASS
+              value: processing
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+spec:
+  selector:
+    component: rabbitmq
+  ports:
+    - port: 5672
+{{- end }}

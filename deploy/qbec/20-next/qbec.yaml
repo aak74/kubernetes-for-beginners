@@ -1,0 +1,27 @@
+apiVersion: qbec.io/v1alpha1
+kind: App
+metadata:
+  name: 20-next
+spec:
+  environments:
+    default:
+      defaultNamespace: default
+      server: https://130.193.58.127:16443
+    hello2:
+      defaultNamespace: qbec-stage
+      server: https://130.193.58.127:16443
+      includes:
+        - hello2
+    stage:
+      defaultNamespace: qbec-stage
+      server: https://130.193.58.127:16443
+    prod:
+      defaultNamespace: qbec-prod
+      server: https://130.193.58.127:16443
+      excludes:
+        - postgres
+        - rabbitmq
+  vars: {}
+  # list of components to exclude by default
+  excludes:
+    - hello2

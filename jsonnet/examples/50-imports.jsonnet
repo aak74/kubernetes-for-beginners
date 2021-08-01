@@ -5,7 +5,7 @@ local mul = if (env == "prod") then 2 else 1;
 
 local getResources(mul = 1) = {
    requests: fn.getResources(defaultResources, mul),
-   limit: fn.getResources(defaultResources, mul * 2),
+   limits: fn.getResources(defaultResources, mul * 2),
 };
 
 [{

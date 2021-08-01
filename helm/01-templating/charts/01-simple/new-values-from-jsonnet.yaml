@@ -1,7 +1,13 @@
 ---
 {
+  "appPort": 8080,
   "env": "prod",
+  "image": {
+    "repository": "nginx",
+    "tag": "1.16.1"
+  },
   "namespace": "jsonnet-prod",
+  "replicaCount": 3,
   "resources": {
     "limit": {
       "cpu": "400m",

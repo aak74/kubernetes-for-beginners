@@ -1,0 +1,60 @@
+@startuml
+
+left to right direction
+
+actor ci
+actor User
+file "\~/.kube/config" as config
+
+rectangle "qbec" as qbecFolder {
+  component qbec
+  file "qbec.yaml" as manifest
+  note bottom of manifest
+    Манифест
+    Содержит описания кластеров и namespace-ов
+  end note
+
+  file "params.libsonnet" as params
+  note top of params
+    Сопоставление среды и
+    переменных окружения
+  end note
+  folder environments {
+    file "base.libsonnet" as baseEnv
+    file "default.libsonnet" as defaultEnv
+  }
+  note top of environments
+    Содержит описания переменных.
+    --
+    В файле с именем окружения
+    переопределяются переменные
+  end note
+
+
+  folder components {
+    file "hello.jsonnet" as helloComp
+    file "postgres.jsonnet" as postgresComp
+    file "rabbitmq.jsonnet" as rabbitmqComp
+  }
+  note top of components
+    Содержит описания компонентов.
+    Один компонент может содержать
+    несколько k8s ресурсов.
+  end note
+
+
+  baseEnv -d-> components
+  defaultEnv -d-> components
+
+  manifest -l- params
+  params -d-> baseEnv
+  params -d-> defaultEnv
+}
+
+config <-d- manifest: Читает конфиг\nпри создании\nконфигурации
+
+User -d-> qbec: init,\ndevelop,\ntest,\ndeploy
+ci -d-> qbec: deploy
+qbec -d-> manifest
+
+@enduml
