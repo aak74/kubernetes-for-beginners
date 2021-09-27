@@ -1,0 +1,60 @@
+@startuml flow
+
+title Flow of creating ReplicaSet
+footer Kubernetes for beginners
+scale max 1080 height
+
+skinparam TitleFontSize 32
+
+box #LightBlue
+  actor Admin
+end box
+
+box "control plane" #MistyRose
+  database etcd #DeepSkyBlue
+  participant "api-server" as api #IndianRed
+  participant controller
+  participant scheduler
+end box
+
+box "worker node" #PaleGreen
+  participant kubelet
+  participant docker
+end box
+
+group #SkyBlue User interaction
+  Admin -> api: Create ReplicaSet
+  api -> etcd: Create record
+  etcd --> api: Ok
+  api --> Admin: Ok
+end
+
+group #LightPink controller interaction
+  controller -> api: Watch new ReplicaSet
+  api -> etcd: Watch new ReplicaSet
+  controller -> api: Create new Pods
+  api -> etcd: Create records
+  etcd --> api: Ok
+  api --> controller: Ok
+end
+
+group #LightPink  scheduler interaction
+  scheduler -> api: Watch new Pods
+  api -> etcd: Watch new Pods
+  scheduler -> api: Bind Pods to Node
+  api -> etcd: Update records
+  etcd --> api: Ok
+  api --> scheduler: Ok
+end
+
+group #MediumSpringGreen kubelet interaction
+  kubelet -> api: Watch bound Pods
+  api -> etcd: Watch bound Pods
+  kubelet -> docker: Run pod
+  docker --> kubelet: Ok
+  kubelet -> api: Pod status
+  api -> etcd: Update record
+  etcd --> api: Ok
+  api --> kubelet: Ok
+end
+@enduml

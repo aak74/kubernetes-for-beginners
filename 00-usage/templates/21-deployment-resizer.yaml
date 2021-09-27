@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: resizer
+  name: resizer
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resizer
+  template:
+    metadata:
+      labels:
+        app: resizer
+    spec:
+      containers:
+        - image: darthsim/imgproxy:latest
+          ports:
+            - containerPort: 8080
+              name: web
+              protocol: TCP
+          name: resizer

@@ -1,0 +1,81 @@
+@startuml kubernetes
+
+footer Kubernetes for beginners
+scale max 1024 width
+
+skinparam nodesep 10
+skinparam ranksep 10
+
+' Kubernetes
+!define KubernetesPuml https://raw.githubusercontent.com/dcasati/kubernetes-PlantUML/master/dist
+
+!includeurl KubernetesPuml/kubernetes_Common.puml
+!includeurl KubernetesPuml/kubernetes_Context.puml
+!includeurl KubernetesPuml/kubernetes_Simplified.puml
+
+!includeurl KubernetesPuml/OSS/KubernetesPod.puml
+!includeurl KubernetesPuml/OSS/KubernetesDeploy.puml
+!includeurl KubernetesPuml/OSS/KubernetesSvc.puml
+!includeurl KubernetesPuml/OSS/KubernetesIng.puml
+
+!define AzurePuml https://raw.githubusercontent.com/plantuml-stdlib/Azure-PlantUML/master/dist
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/Databases/AzureDatabaseForPostgreSQL.puml
+
+left to right direction
+
+actor User
+
+Rectangle "Network" #Khaki {
+
+  ' Kubernetes Components
+  Cluster_Boundary(cluster, "Kubernetes Cluster") {
+    KubernetesIng(ingress, "your.domain.com", "")
+    Service_Boundary(service_main, "Main") {
+      KubernetesSvc(svc_main, "service-main", "")
+      KubernetesPod(pod_main_1, "pod-main 1\n10.244.1.11", "")
+      KubernetesPod(pod_main_2, "pod-main 2\n10.244.2.12", "")
+      KubernetesPod(pod_main_3, "pod-main 3\n10.244.3.13", "")
+
+      KubernetesDeploy(deploy_main, "deployment-main", "")
+
+      Rel(svc_main, pod_main_1," ")
+      Rel(svc_main, pod_main_2," ")
+      Rel(svc_main, pod_main_3," ")
+
+      Rel_U(deploy_main, pod_main_3, " ")
+      Rel_U(deploy_main, pod_main_2, " ")
+      Rel_U(deploy_main, pod_main_1, " ")
+
+      KubernetesSvc(svc_db, "service-db", "")
+      pod_main_1 -u-> svc_db
+    }
+
+    Service_Boundary(service_resizer, "Resizer") {
+      KubernetesSvc(svc_resizer, "service-resizer", "")
+      KubernetesPod(pod_resizer_1, "pod-resizer 1\n10.244.1.21", "")
+      KubernetesPod(pod_resizer_2, "pod-resizer 2\n10.244.2.22", "")
+      KubernetesPod(pod_resizer_3, "pod-resizer 3\n10.244.3.23", "")
+
+      KubernetesDeploy(deploy_resizer, "deployment-resizer", "")
+
+      Rel(svc_resizer, pod_resizer_1," ")
+      Rel(svc_resizer, pod_resizer_2," ")
+      Rel(svc_resizer, pod_resizer_3," ")
+
+      Rel_U(deploy_resizer, pod_resizer_3, " ")
+      Rel_U(deploy_resizer, pod_resizer_2, " ")
+      Rel_U(deploy_resizer, pod_resizer_1, " ")
+    }
+  }
+
+  Rel(ingress, svc_main, " ")
+
+  pod_main_1 ---> svc_resizer
+
+  AzureDatabaseForPostgreSQL(db, "Some Database", "External Database")
+  svc_db -d-> db
+}
+
+User -> ingress
+@enduml

@@ -1,0 +1,35 @@
+@startuml kubernetes
+
+footer Kubernetes for beginners
+scale max 1024 width
+
+skinparam nodesep 10
+skinparam ranksep 10
+
+' Kubernetes
+!define KubernetesPuml https://raw.githubusercontent.com/dcasati/kubernetes-PlantUML/master/dist
+
+!includeurl KubernetesPuml/kubernetes_Common.puml
+!includeurl KubernetesPuml/kubernetes_Context.puml
+!includeurl KubernetesPuml/kubernetes_Simplified.puml
+
+!includeurl KubernetesPuml/OSS/KubernetesPod.puml
+!includeurl KubernetesPuml/OSS/KubernetesDeploy.puml
+
+left to right direction
+
+' Kubernetes Components
+Cluster_Boundary(cluster, "Kubernetes Cluster") {
+  KubernetesPod(pod1, "pod-1\n10.244.1.11", "")
+  KubernetesPod(pod2, "pod-2\n10.244.2.12", "")
+  KubernetesPod(pod3, "pod-3\n10.244.3.13", "")
+
+  KubernetesDeploy(deploy, "deployment", "")
+
+  Rel_U(deploy, pod3, " ")
+  Rel_U(deploy, pod2, " ")
+  Rel_U(deploy, pod1, " ")
+}
+
+
+@enduml

@@ -1,0 +1,50 @@
+@startuml kubernetes
+
+footer Kubernetes for beginners
+scale max 1024 width
+
+skinparam nodesep 10
+skinparam ranksep 10
+
+' Kubernetes
+!define KubernetesPuml https://raw.githubusercontent.com/dcasati/kubernetes-PlantUML/master/dist
+
+!includeurl KubernetesPuml/kubernetes_Common.puml
+!includeurl KubernetesPuml/kubernetes_Context.puml
+!includeurl KubernetesPuml/kubernetes_Simplified.puml
+
+!includeurl KubernetesPuml/OSS/KubernetesPod.puml
+!includeurl KubernetesPuml/OSS/KubernetesDeploy.puml
+
+left to right direction
+
+' Kubernetes Components
+Cluster_Boundary(cluster, "Kubernetes Cluster") {
+  Service_Boundary(svc_main, "Main") {
+    KubernetesPod(pod_main_1, "pod-main 1\n10.244.1.11", "")
+    KubernetesPod(pod_main_2, "pod-main 2\n10.244.2.12", "")
+    KubernetesPod(pod_main_3, "pod-main 3\n10.244.3.13", "")
+
+    KubernetesDeploy(deploy_main, "deployment-main", "")
+
+    Rel_U(deploy_main, pod_main_3, " ")
+    Rel_U(deploy_main, pod_main_2, " ")
+    Rel_U(deploy_main, pod_main_1, " ")
+  }
+
+  Service_Boundary(svc_resizer, "Resizer") {
+    KubernetesPod(pod_resizer_1, "pod-resizer 1\n10.244.1.21", "")
+    KubernetesPod(pod_resizer_2, "pod-resizer 2\n10.244.2.22", "")
+    KubernetesPod(pod_resizer_3, "pod-resizer 3\n10.244.3.23", "")
+
+    KubernetesDeploy(deploy_resizer, "deployment-resizer", "")
+
+    Rel_U(deploy_resizer, pod_resizer_3, " ")
+    Rel_U(deploy_resizer, pod_resizer_2, " ")
+    Rel_U(deploy_resizer, pod_resizer_1, " ")
+  }
+}
+
+pod_main_1 -[thickness=3,dashed,#blue]--> pod_resizer_1: Можно обращаться по IP
+
+@enduml

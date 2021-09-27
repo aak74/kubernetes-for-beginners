@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: default
+  name: main
+spec:
+  rules:
+    - host: main.akop.pw
+      http:
+        paths:
+          - backend:
+              serviceName: main
+              servicePort: http
+  tls:
+    - hosts:
+        - main.akop.pw
+      secretName: akop

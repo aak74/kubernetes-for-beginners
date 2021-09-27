@@ -1,0 +1,28 @@
+@startuml cluster-scheme
+
+footer Kubernetes for beginners
+scale max 1024 width
+
+skinparam nodesep 10
+skinparam ranksep 10
+
+' Kubernetes
+!define KubernetesPuml https://raw.githubusercontent.com/dcasati/kubernetes-PlantUML/master/dist
+
+!includeurl KubernetesPuml/kubernetes_Common.puml
+!includeurl KubernetesPuml/kubernetes_Context.puml
+!includeurl KubernetesPuml/kubernetes_Simplified.puml
+
+!includeurl KubernetesPuml/OSS/KubernetesNode.puml
+!includeurl KubernetesPuml/OSS/KubernetesMaster.puml
+
+KubernetesMaster("master", "master", "#Red")
+KubernetesNode("node1", "node1", "")
+KubernetesNode("node2", "node2", "")
+KubernetesNode("node3", "node3", "")
+
+Rel(master,node1," ")
+Rel(master,node2," ")
+Rel(master,node3," ")
+
+@enduml
