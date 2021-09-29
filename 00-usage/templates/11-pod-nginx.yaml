@@ -7,9 +7,10 @@ metadata:
   namespace: default
 spec:
   containers:
-    - image: nginx:1.14
+    - image: nginx:latest
       ports:
         - containerPort: 80
           name: web
           protocol: TCP
       name: nginx
+      imagePullPolicy: IfNotPresent

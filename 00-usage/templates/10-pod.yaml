@@ -12,3 +12,4 @@ spec:
         - "30"
       image: alpine
       name: alpine
+      imagePullPolicy: IfNotPresent

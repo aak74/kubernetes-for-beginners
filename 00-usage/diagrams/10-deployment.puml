@@ -1,4 +1,4 @@
-@startuml kubernetes
+@startuml deployment
 
 footer Kubernetes for beginners
 scale max 1024 width
