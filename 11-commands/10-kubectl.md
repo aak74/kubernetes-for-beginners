@@ -66,8 +66,20 @@ kubectl apply / delete
 
 ## kubectl config
 Управление локальным конфиг-файлом
- 
+
 Полезные команды:
 - current-context — получение текущего кластера/пользователя для команд;
 - get-contexts — вывод списка доступных контекстов;
 - use-context — изменение текущего контекста на указанный
+
+## kubectl create
+Создание объектов.
+
+Полезные флаги:
+- --namespace пространство имен, в котором нужно создать объект;
+
+### Демо
+```shell script
+kubectl create deployment nginx --namespace default --image=nginx:latest --replicas=2
+```
+
