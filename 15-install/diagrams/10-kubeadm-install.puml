@@ -1,0 +1,38 @@
+@startuml 10-kubeadm-install
+
+title Установка кластера с помощью kubeadm
+footer Kubernetes for beginners
+scale max 1024 width
+
+actor Admin
+participant "Control plane" as cp
+participant node1
+participant node2
+participant node3
+
+group #LightPink Control plane
+    Admin -> cp: Install soft
+    Admin -> cp: Fix settings
+    Admin -> cp: Cluster init
+    Admin -> cp: Install CNI plugin
+end
+
+group #LightGreen node
+    Admin -> node1: Install soft
+    Admin -> node1: Fix settings
+    Admin -> node1: Node join
+end
+
+group #LightGreen node
+    Admin -> node2: Install soft
+    Admin -> node2: Fix settings
+    Admin -> node2: Node join
+end
+
+group #LightGreen node
+    Admin -> node3: Install soft
+    Admin -> node3: Fix settings
+    Admin -> node3: Node join
+end
+
+@enduml
