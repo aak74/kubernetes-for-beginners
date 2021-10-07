@@ -139,5 +139,5 @@ kubeadm certs renew all
 
 ```shell script
 # Удалить taint с ноды для возможности запуска рабочей нагрузки на control plane node  
-kubectl taint node master node-role.kubernetes.io/master:NoSchedule-
+kubectl taint node master1 node-role.kubernetes.io/master-
 ```
