@@ -1,6 +1,8 @@
 # Kubernetes для начинающих
 Курс по Kubernetes для начинающих.
-Присоединяйся к [чату](https://t.me/kubernetes_for_beginners) по этому курсу
+Присоединяйся к [чату](https://t.me/kubernetes_for_beginners) по этому курсу.
+
+![](./images/qr-chat.png)
 
 
 
