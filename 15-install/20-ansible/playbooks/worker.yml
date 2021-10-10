@@ -1,0 +1,7 @@
+---
+- hosts: workers
+  tasks:
+  - name: Join node
+    shell: kubeadm join 10.0.90.30:6443 --token gce12u.hunw0ph53ofxs03u --discovery-token-ca-cert-hash sha256:59689b714f23e0695ca5dc856b627182f53f9ed06a9c782b694316f7b560859e
+#    shell: kubeadm join --skip-phases=preflight 10.0.90.30:6443 --token gce12u.hunw0ph53ofxs03u --discovery-token-ca-cert-hash sha256:59689b714f23e0695ca5dc856b627182f53f9ed06a9c782b694316f7b560859e
+

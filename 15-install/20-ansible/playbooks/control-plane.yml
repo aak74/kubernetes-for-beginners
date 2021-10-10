@@ -1,0 +1,15 @@
+---
+- hosts: master
+  tasks:
+  - name: Kubeadm init
+    shell: kubeadm init --node-name=m1 --apiserver-cert-extra-sans=master --pod-network-cidr 10.244.0.0/16
+
+  - name: Copy config to home directory
+    shell: mkdir -p $HOME/.kube && sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config && sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+  - name: Download CNI plugin
+    shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+  - name: Kubeadm token print
+    shell: kubeadm token create --print-join-command
+  

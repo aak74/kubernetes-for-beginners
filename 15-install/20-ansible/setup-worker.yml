@@ -1,0 +1,3 @@
+---
+- import_playbook: playbooks/soft.yml
+- import_playbook: playbooks/worker.yml

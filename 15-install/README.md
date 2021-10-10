@@ -13,3 +13,5 @@
 
 ## Установка
 - [kubeadm](./10-kubeadm/README.md)
+- [ansible](./20-ansible/README.md)
+- [kubespray](./30-kubespray/README.md)
