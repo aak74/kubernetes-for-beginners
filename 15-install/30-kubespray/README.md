@@ -51,30 +51,37 @@ CONFIG_FILE=inventory/mycluster/hosts.yaml python3 contrib/inventory_builder/inv
 Вне зависимости от предыдущего шага установка кластера производится однообразно.
 Меняется только указываемый `inventory` файл для playbook.
 
-### После билдера 
-```shell script
-# Установка кластера
-ansible-playbook -i inventory/mycluster/hosts.yaml cluster.yml
+Установка кластера занимает значительное количество времени.
+Время установки кластер из двух нод может занять более 10 минут.
+Чем больше нод, тем больше времени занимает установка.
 
-# Добавление нод
-ansible-playbook -i inventory/mycluster/hosts.yaml scale.yml
+### Установка кластера после билдера 
+```shell script
+ansible-playbook -i inventory/mycluster/hosts.yaml cluster.yml
 ```
 
-### Без билдера 
+### Установка кластера без билдера 
 ```shell script
-# Установка кластера
 ansible-playbook -i inventory/mycluster/inventory.ini cluster.yml -b -v
-
-# Добавление нод
-ansible-playbook -i inventory/mycluster/inventory.ini scale.yml -b -v
 ```
 
 ## Проверка установки
-
 ```shell script
 kubectl version
 kubectl get nodes
 
 kubectl create deploy nginx --image=nginx:latest --replicas=2
 kubectl get po -o wide
+```
+
+## Добавление ноды
+```shell script
+ansible-playbook -i inventory/mycluster/hosts.yml scale.yml -b -v
+```
+
+## Удаление ноды
+```shell script
+ansible-playbook -i inventory/mycluster/hosts.yml remove-node.yml -b -v \
+  --private-key=~/.ssh/private_key \
+  --extra-vars "node=nodename,nodename2
 ```
