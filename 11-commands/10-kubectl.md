@@ -52,6 +52,16 @@ kubectl apply / delete
 - --ignore-daemonsets — оставляет поды демонов на ноде, позволяет команде завершиться без ошибок;
 - --delete-local-data - удаляет локальные данные.
 
+## kubectl taint
+Служит для установки, обновления и удаления taint на ноде. Taint нужен для подсказки kube-scheduler как распределять поды.
+
+Taint в переводе это что-то вроде примеси. Поды могут быть толерантны к таким примесям, или же не толерантны.
+
+```shell script
+# Удалить taint с ноды для возможности запуска рабочей нагрузки на control plane node  
+kubectl taint node master1 node-role.kubernetes.io/master-
+```
+
 ## kubectl port-forward
 Обеспечивает доступ к ресурсу кластера с компьютера, на котором запущена эта команда.
 
@@ -66,8 +76,20 @@ kubectl apply / delete
 
 ## kubectl config
 Управление локальным конфиг-файлом
- 
+
 Полезные команды:
 - current-context — получение текущего кластера/пользователя для команд;
 - get-contexts — вывод списка доступных контекстов;
 - use-context — изменение текущего контекста на указанный
+
+## kubectl create
+Создание объектов.
+
+Полезные флаги:
+- --namespace пространство имен, в котором нужно создать объект;
+
+### Демо
+```shell script
+kubectl create deployment nginx --namespace default --image=nginx:latest --replicas=2
+```
+
