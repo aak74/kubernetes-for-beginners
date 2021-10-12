@@ -1,0 +1,44 @@
+@startuml network-policy
+
+title Network Policy
+footer Kubernetes for beginners
+scale max 1024 width
+
+'skinparam nodesep 10
+'skinparam ranksep 10
+
+' Kubernetes
+!define KubernetesPuml https://raw.githubusercontent.com/dcasati/kubernetes-PlantUML/master/dist
+
+!includeurl KubernetesPuml/kubernetes_Common.puml
+!includeurl KubernetesPuml/kubernetes_Context.puml
+!includeurl KubernetesPuml/kubernetes_Simplified.puml
+
+!includeurl KubernetesPuml/OSS/KubernetesPod.puml
+!includeurl KubernetesPuml/OSS/KubernetesDeploy.puml
+!includeurl KubernetesPuml/OSS/KubernetesSvc.puml
+!includeurl KubernetesPuml/OSS/KubernetesIng.puml
+
+!define AzurePuml https://raw.githubusercontent.com/plantuml-stdlib/Azure-PlantUML/master/dist
+
+left to right direction
+
+Cluster_Boundary(cluster, "Kubernetes Cluster") {
+  KubernetesPod(pod_frontend, "pod-frontend", "")
+  KubernetesPod(pod_backend, "pod-backend", "")
+  KubernetesPod(pod_cache, "pod-cache", "")
+
+  pod_backend =[#Green]=> pod_cache
+  pod_frontend =[#Green]=> pod_backend
+
+  pod_frontend <.[#Red].> pod_cache
+
+  pod_backend <.[#Red]. pod_cache
+  pod_frontend <.[#Red]. pod_backend
+
+  legend
+  # <color #Green>Зеленый</color> цвет - связь в этом направлении работает
+  # <color #Red>Красный</color> цвет - связь в этом направлении не работает
+  end legend
+}
+@enduml
