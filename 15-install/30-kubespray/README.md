@@ -37,7 +37,7 @@ cp -rfp inventory/sample inventory/mycluster
 ```shell script
 # Обновление Ansible inventory с помощью билдера 
 declare -a IPS=(10.10.1.3 10.10.1.4 10.10.1.5)
-CONFIG_FILE=inventory/mycluster/hosts.yaml python3 contrib/inventory_builder/inventory.py ${IPS[@]}
+CONFIG_FILE=inventory/netology/hosts.yaml python3 contrib/inventory_builder/inventory.py ${IPS[@]}
 
 # 10.10.1.3 10.10.1.4 10.10.1.5 - адреса ваших серверов
 ```
@@ -57,7 +57,7 @@ CONFIG_FILE=inventory/mycluster/hosts.yaml python3 contrib/inventory_builder/inv
 
 ### Установка кластера после билдера 
 ```shell script
-ansible-playbook -i inventory/mycluster/hosts.yaml cluster.yml
+ansible-playbook -i inventory/mycluster/hosts.yaml cluster.yml -b -v
 ```
 
 ### Установка кластера без билдера 
