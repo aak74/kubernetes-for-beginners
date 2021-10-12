@@ -26,6 +26,7 @@ ip a
 # Инициализация кластера
 kubeadm init \
   --apiserver-advertise-address=10.0.90.13 \
+  --pod-network-cidr 10.244.0.0/16 \
   --apiserver-cert-extra-sans=178.154.234.213
 ```
 
@@ -41,7 +42,8 @@ modprobe br_netfilter
 # Инициализация кластера
 kubeadm init \
   --apiserver-advertise-address=10.0.90.13 \
-  --apiserver-cert-extra-sans=178.154.234.213,
+  --pod-network-cidr 10.244.0.0/16 \
+  --apiserver-cert-extra-sans=178.154.234.213
 ```
 Со второй попытки все удалось.
 
@@ -70,7 +72,7 @@ kubectl get nodes
 
 Выясним в чем причина:
 ```shell script
-kubectl --context netology describe nodes master1 | grep KubeletNotReady
+kubectl describe nodes master1 | grep KubeletNotReady
 
 # Результат:
 #  Ready            False   Wed, 06 Oct 2021 21:46:39 +0300   Wed, 06 Oct 2021 21:26:26 +0300   KubeletNotReady              container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized
@@ -108,7 +110,6 @@ cat $HOME/.kube/config
 Если адрес при создании кластера был указан внутренний, а обращаться к kube-apiserver вы планируете по внешнему, то не забудьте изменить адрес.
 
 ## Если что-то пошло не так
-
 ```shell script
 # Сброс кластера
 kubeadm reset
@@ -152,6 +153,7 @@ ip a
 # Инициализация кластера
 kubeadm init \
   --apiserver-advertise-address=10.0.90.13 \
+  --pod-network-cidr 10.244.0.0/16 \
   --apiserver-cert-extra-sans=178.154.234.213
 ```
 ### Копирование доступов и загрузка плагина CNI flannel 

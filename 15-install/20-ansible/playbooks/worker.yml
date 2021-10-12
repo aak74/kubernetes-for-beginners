@@ -1,0 +1,7 @@
+---
+- hosts: workers
+  tasks:
+  - name: Join node
+    shell: kubeadm join 10.0.90.30:6443
+#    shell: kubeadm join --skip-phases=preflight 10.0.90.30:6443
+

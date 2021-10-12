@@ -1,4 +1,5 @@
 # Установка Kubernetes
+[Документация](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/)
 
 ## Требования к ресурсам нод
 ### Требования к ресурсам control plane node
@@ -12,6 +13,10 @@
 - Диск — от 100 ГБ
 
 ## Установка
-- [kubeadm](./10-kubeadm/README.md)
-- [ansible](./20-ansible/README.md)
-- [kubespray](./30-kubespray/README.md)
+Упрощенная схема установки
+
+![Схема](./images/10-kubeadm-install.png)
+
+Инструкции по установке:
+- [Установка control plane](./10-kubeadm-control-plane.md)
+- [Установка worker node](./20-kubeadm-worker-node.md)

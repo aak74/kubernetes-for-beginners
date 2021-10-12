@@ -1,0 +1,5 @@
+---
+- hosts: master
+  tasks:
+  - name: Kubeadm reset
+    shell: kubeadm reset -f
