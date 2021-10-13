@@ -1,17 +1,18 @@
 # Network Policy
 Объект NetworkPolicy служит для разграничения доступа между подами.
 
-[Документация](https://kubernetes.io/docs/concepts/services-networking/network-policies/).
+- Документация [Kubernetes](https://kubernetes.io/docs/concepts/services-networking/network-policies/).
+- Документация calico [About Network Policy](https://docs.projectcalico.org/about/about-network-policy).
 
-Для исследования работы принципов Network Policy рекомендую использовать инструмент [Network-MultiTool](https://github.com/Praqma/Network-MultiTool).
+## Инструменты
+Для исследования работы принципов Network Policy рекомендую использовать ящик с инструментами [Network-MultiTool](https://github.com/Praqma/Network-MultiTool).
 
-Этот образ содержит все необходимые для этого инструменты.
+Docker-образы из этого репозитория содержит все необходимые для этого инструменты.
 
-
+## Настройка NetworkPolicy
 Вот пример желаемого поведения:
 ![NetworkPolicy](./images/network-policy.png)
 
-## Настройка NetworkPolicy
 В нашем приложении реализовано 3 сервиса:
 - frontend; 
 - backend; 
@@ -27,7 +28,8 @@
 
 ## Проверка доступности между подами с flannel
 Сначала развертываем в кластере с установленным CNI плагином flannel.
-В этом плагине не реализована работа с NetworkPolicy.
+В этом плагине не реализована работа с NetworkPolicy. 
+Поэтому указание NetworkPolicy никак не повлияет на сетевую доступность между подами.
 
 Выдвинем две гипотезы:
 1. Без настройки NetworkPolicy все поды будут доступны между собой.
@@ -45,19 +47,12 @@ kubectl get po
 
 ### Проверка доступности между подами
 ```shell script
-kubectl -n default exec backend-7b4877445f-8mwvr -- curl -s frontend
-kubectl -n default exec backend-7b4877445f-8mwvr -- curl -s cache
-kubectl -n default exec backend-7b4877445f-8mwvr -- curl -s backend
+kubectl exec backend-7b4877445f-kgvnr -- curl -s frontend
+kubectl exec backend-7b4877445f-kgvnr -- curl -s cache
+kubectl exec backend-7b4877445f-kgvnr -- curl -s backend
 ```
 В случае отсутствия запретов все поды будут доступны. 
 Подобный эксперимент можно провести из любого из созданных подов.
-
-Например:
-```shell script
-kubectl -n default exec frontend-7f74b5fd7-qsv46 -- curl -s frontend
-kubectl -n default exec frontend-7f74b5fd7-qsv46 -- curl -s cache
-kubectl -n default exec frontend-7f74b5fd7-qsv46 -- curl -s backend
-```
 
 Гипотеза подтвердилась.
 
@@ -86,12 +81,53 @@ kubectl get networkpolicies
 1. Без настройки NetworkPolicy все поды будут доступны между собой.
 1. После настройки NetworkPolicy `backend` будет доступен из `frontend`, `cache` будет доступен из `backend`. Все остальные маршруты будут запрещены.
 
+### Проверка доступности между подами
 Проверим это по прежней схеме.
+```shell script
+kubectl exec backend-7b4877445f-kgvnr -- curl -s frontend
+kubectl exec backend-7b4877445f-kgvnr -- curl -s cache
+kubectl exec backend-7b4877445f-kgvnr -- curl -s backend
+```
 
-Команды здесь не указаны, потому что они полностью повторяются. 
+После проверки можно увидеть, что 1 гипотеза снова подтвердилась.
+Без настройки NetworkPolicy с установленным calico все работает, как и прежде.
 
-После проверки можно увидеть, что 1 гипотеза не подтвердилась. Без настройки NetworkPolicy вообще ничего не работает.
-Это говорит, что в calico работает режим: "Все что явно не разрешено - то запрещено". 
+### Включение `deny all` режима
+Deny all режим - это режим "Все что явно не разрешено - то запрещено". 
+
+С помощью такой конфигурации будут запрещены все входящие соединения для всех подов.
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+```
+
+Применим этот конфиг:
+```shell script
+kubectl apply -f templates/network-policy/00-default.yaml
+```
+
+Проверяем доступность подов между собой.
+Поды между собой недоступны.
+
+### Применение NetworkPolicy
+Применяем остальные наши сетевые политики. 
+```shell script
+kubectl apply -f templates/network-policy
+```
+
+Теперь проверим доступность между подами по прежней схеме.
+
+Будут доступны поды только по нашей схеме.
+- frontend -> backend
+- backend -> cache
+
+Остальные варианты недоступны.
 
 Вторая гипотеза подтвердилась полностью.
 
