@@ -22,3 +22,5 @@ Service Networking [документация](https://kubernetes.io/docs/concept
 - [Третий уровень](30-level-3.md)
 
 Есть уровни погружения и глубже. Это далеко за пределами курса для начинающих.
+
+Если вам интересно дальнейшее изучение сетей, то начните с этого [репозитория](https://github.com/nleiva/kubernetes-networking-links)
