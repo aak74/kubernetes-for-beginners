@@ -9,4 +9,3 @@ spec:
       app: frontend
   policyTypes:
     - Ingress
-    - Egress
