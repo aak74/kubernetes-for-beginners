@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pod-wo-errors
+  name: pod-wo-errors
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pod-wo-errors
+  template:
+    metadata:
+      labels:
+        app: pod-wo-errors
+    spec:
+      containers:
+        - image: nginx:1.20
+          imagePullPolicy: IfNotPresent
+          name: nginx
+        - image: praqma/network-multitool:alpine-extra
+          imagePullPolicy: IfNotPresent
+          name: multitool
+          env:
+            - name: HTTP_PORT
+              value: "8080"
+      terminationGracePeriodSeconds: 30

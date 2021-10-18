@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pod-with-error
+  name: pod-with-error
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pod-with-error
+  template:
+    metadata:
+      labels:
+        app: pod-with-error
+    spec:
+      containers:
+        - image: nginx:1.20
+          imagePullPolicy: IfNotPresent
+          name: nginx
+        - image: praqma/network-multitool:alpine-extra
+          imagePullPolicy: IfNotPresent
+          name: multitool
+      terminationGracePeriodSeconds: 30
