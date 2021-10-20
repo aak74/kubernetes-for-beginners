@@ -30,6 +30,7 @@ metadata:
 subsets:
   - addresses:
       - ip: 10.128.0.21
+      - ip: 10.128.0.22
     ports:
       - port: 5432
 ```

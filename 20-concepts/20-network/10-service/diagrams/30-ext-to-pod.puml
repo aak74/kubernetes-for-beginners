@@ -1,0 +1,49 @@
+@startuml ext-to-pod
+
+footer Kubernetes for beginners
+scale max 1024 width
+
+skinparam nodesep 10
+skinparam ranksep 40
+
+!define KubernetesPuml https://raw.githubusercontent.com/dcasati/kubernetes-PlantUML/master/dist
+
+!includeurl KubernetesPuml/kubernetes_Common.puml
+!includeurl KubernetesPuml/kubernetes_Context.puml
+!includeurl KubernetesPuml/kubernetes_Simplified.puml
+
+!includeurl KubernetesPuml/OSS/KubernetesPod.puml
+!includeurl KubernetesPuml/OSS/KubernetesDeploy.puml
+!includeurl KubernetesPuml/OSS/KubernetesSvc.puml
+!includeurl KubernetesPuml/OSS/KubernetesEp.puml
+
+!define AzurePuml https://raw.githubusercontent.com/plantuml-stdlib/Azure-PlantUML/master/dist
+!includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/AzureSimplified.puml
+
+!includeurl AzurePuml/Databases/AzureDatabaseForPostgreSQL.puml
+
+skinparam ArrowFontSize 20
+skinparam ArrowFontColor #Red
+
+left to right direction
+
+actor User
+
+Cluster_Boundary(cluster, "Kubernetes Cluster") {
+  KubernetesPod(pod_main_1, "pod-main 1\n10.244.1.11", "")
+  KubernetesPod(pod_main_2, "pod-main 2\n10.244.2.12", "")
+  KubernetesPod(pod_main_3, "pod-main 3\n10.244.3.13", "")
+
+  KubernetesDeploy(deploy_main, "deployment\nmain", "")
+  KubernetesSvc(svc_main, "service\n:30080", "")
+
+  deploy_main -d-> pod_main_1
+  deploy_main -d-> pod_main_2
+  deploy_main -d-> pod_main_3
+  svc_main -u-> pod_main_1
+  svc_main -u-> pod_main_2
+  svc_main -u-> pod_main_3
+}
+User -[thickness=4,#green]u-> svc_main: :30080
+@enduml

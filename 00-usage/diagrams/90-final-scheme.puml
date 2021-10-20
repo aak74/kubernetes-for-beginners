@@ -20,6 +20,7 @@ skinparam ranksep 10
 
 !define AzurePuml https://raw.githubusercontent.com/plantuml-stdlib/Azure-PlantUML/master/dist
 !includeurl AzurePuml/AzureCommon.puml
+!includeurl AzurePuml/AzureSimplified.puml
 !includeurl AzurePuml/Databases/AzureDatabaseForPostgreSQL.puml
 
 left to right direction
