@@ -45,9 +45,9 @@ Pod состоит из одного или нескольких контейн�
 ```shell script
 kubectl apply -f templates/10-pod.yaml
 kubectl get pods
-kubectl get pods nginx-7fb9867-ffhmj -o yaml
-kubectl describe pods nginx-7fb9867-ffhmj
-kubectl describe pods nginx-7fb9867-ffhmj | grep "^IP:"
+kubectl get pods nginx -o yaml
+kubectl describe pods nginx
+kubectl describe pods nginx | grep "^IP:"
 ```
 Под успешно запустился и готов к принятию трафика.
 
@@ -67,10 +67,10 @@ kubectl get pods
 
 Команды для исследования пода:
 ```shell script
-kubectl describe pod pod-with-error-748b89f4-prf2v
-kubectl get pod pod-with-error-748b89f4-prf2v -o yaml
-kubectl logs -f pod-with-error-748b89f4-prf2v -c nginx
-kubectl logs -f pod-with-error-748b89f4-prf2v -c multitool
+kubectl describe pod pod-with-error
+kubectl get pod pod-with-error -o yaml
+kubectl logs -f pod-with-error -c nginx
+kubectl logs -f pod-with-error -c multitool
 ```
 
 После просмотра логов выясняется:
@@ -89,7 +89,12 @@ nginx: [emerg] still could not bind()
 Проверим это:
 ```shell script
 kubectl apply -f templates/40-pod-wo-errors.yaml
-kubectl exec -it -c multitool pod-wo-errors-6f6fbc8496-bjj2t -- curl localhost
+
+# Обращение из контейнера multitool к контейнеру nginx внутри одного пода
+kubectl exec -it -c multitool pod-wo-errors -- curl localhost
+
+# Обращение из контейнера multitool к самому себе внутри одного пода
+kubectl exec -it -c multitool pod-wo-errors -- curl localhost:8080
 ```
 
 В спецификации контейнера можно указывать порты, которые могут быть доступны снаружи.
@@ -111,3 +116,22 @@ kubectl exec -it -c multitool pod-wo-errors-6f6fbc8496-bjj2t -- curl localhost
 - проба liveness нужна для проверки работы и перезапуска пода в случае проблем;
 - пробы readiness нужны для ожидания запуска перед обслуживанием трафика;
 - все пробы запускаются с периодичностью, которая определена в спецификации. 
+
+## Пример манифеста Pod
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+  namespace: default
+spec:
+  containers:
+  - image: nginx:1.20
+    imagePullPolicy: IfNotPresent
+    name: nginx
+```
+
+Другие примеры можно увидеть в папке `templates`. 

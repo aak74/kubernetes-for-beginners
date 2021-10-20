@@ -1,11 +1,9 @@
 # Ingress
 [Документация](https://kubernetes.io/docs/concepts/services-networking/ingress/)
 
-Ingress нужны для доступа к приложениям снаружи кластера по http(https). 
+Ingress обеспечивает доступ к приложениям снаружи кластера по http(https). 
 
 Ingress может обеспечить балансировку нагрузки, SSL termination и доступ по доменному имени.
-
-Обеспечивает связь внешнего мира с приложением.
 
 ![ingress](images/ingress.png)
 
@@ -25,3 +23,28 @@ kubectl -n ingress-nginx get ds
 ```
 
 ingress controller устанавливается в кластере как DaemonSet
+
+## Пример манифеста Ingress
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: default
+  name: main
+spec:
+  rules:
+    - host: main.akop.pw
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: main
+                port:
+                  name: web
+  tls:
+    - hosts:
+        - main.akop.pw
+      secretName: akop
+```

@@ -21,3 +21,6 @@ kubectl get sts
 Например `prometheus-0`.
 У пода, который создан с помощью deployment (ReplicaSet), имя будет заканчиваться 5 символьным hash.
 Например `grafana-5c8fb4c656-69qb2`.
+
+## Пример манифеста StatefulSet
+Примеры можно увидеть в папке `templates`. 

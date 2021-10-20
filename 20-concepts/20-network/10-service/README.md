@@ -53,3 +53,21 @@ Service может создавать маршруты с преобразова
 
 Сервис LoadBalancer может стать `Ready` только в случае если ваш облачный провайдер умеет создавать Load Balancer из этого ресурса.
 В противном случае такой сервис зависнет в стадии `Pending`. 
+
+## Пример манифеста Service
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  namespace: default
+spec:
+  ports:
+    - name: web
+      port: 80
+  selector:
+    app: nginx
+  type: ClusterIP
+```
+
+Другие примеры можно увидеть в папке `templates`. 
