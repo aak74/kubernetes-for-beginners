@@ -1,0 +1,42 @@
+@startuml scheme-dynamic
+
+title PersistentVolume - dynamic
+footer Kubernetes for beginners
+scale max 1080 height
+
+skinparam TitleFontSize 32
+
+autonumber
+
+box #LightGreen
+  actor Developer
+end box
+
+box "K8s cluster" #LightPink
+  participant Pod
+  participant PersistentVolumeClaim as pvc
+  participant PersistentVolume as pv
+end box
+
+box #LightBlue
+  control Provisioner
+end box
+
+Developer -> Pod: Указывает\nспецификации\nпода
+Pod -> pvc: В поде указано имя\nPersistentVolumeClaim
+pvc -> Provisioner: Запрос на создание PersistentVolume\nпо спецификации
+
+Provisioner -> pv: Создает\nPersistentVolume
+note left
+  PersistentVolume
+  будет в точности
+  соответствовать
+  режиму доступа
+  и запрошенному размеру
+end note
+pvc -> pvc: создает связь с\nPersistentVolume
+pvc -> Pod: Поду сообщается о\nналичии PersistentVolume
+Pod -> Pod: Создается под
+Pod -> pv: PersistentVolume монтируется к указанной точке
+Pod -> pv: Используется PersistentVolume
+@enduml
