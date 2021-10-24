@@ -1,0 +1,54 @@
+@startuml scheme
+
+title PersistentVolume - manual
+footer Kubernetes for beginners
+scale max 1080 height
+
+skinparam TitleFontSize 32
+
+autonumber
+
+box #LightGreen
+  actor Developer
+end box
+
+box "K8s cluster" #LightPink
+  participant Pod
+  participant PersistentVolumeClaim as pvc
+  participant PersistentVolume as pv
+end box
+
+box #LightBlue
+  actor Admin
+end box
+
+group Необходимые\nпредварительные\nдействия
+  Admin -> pv: Создает\nPersistentVolume
+end group
+
+Developer -> Pod: Указывает\nспецификации\nпода
+Pod -> pvc: В поде указано имя\nPersistentVolumeClaim
+pvc -> pv: Ищет PersistentVolume\nпо спецификации
+note left
+  PersistentVolume
+  должен соответствовать
+  режиму доступа
+  и его размер должен
+  быть не меньше указанного
+end note
+
+alt #LightGreen Есть подходящий PersistentVolume
+  pvc -> pvc: создает связь с\nPersistentVolume
+  pvc -> Pod: Поду сообщается о\nналичии PersistentVolume
+  Pod -> Pod: Создается под
+  Pod -> pv: PersistentVolume монтируется к указанной точке
+  Pod -> pv: Используется PersistentVolume
+else #Khaki Нет подходящего PersistentVolume
+  note over pvc,Pod
+    Объекты
+    Pod и PersistentVolumeClaim
+    будут находится в состоянии
+    Pending
+  end note
+end
+@enduml
