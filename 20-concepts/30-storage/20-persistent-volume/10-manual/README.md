@@ -105,9 +105,12 @@ kubectl get po,pv,pvc
 
 PersistentVolume обещает нам сохранение данных. Проверим это. 
 
-### hostPath
-Самый простой тип PersistentVolume - это hostPath.
-При его использовании данные помещаются на ноде в указанной папке. 
+### Типы PersistentVolume
+[Список доступных типов PersistentVolume](https://kubernetes.io/docs/concepts/storage/persistent-volumes/#types-of-persistent-volumes)
+
+В данном примере мы использовали самый простой тип PersistentVolume - `hostPath`. 
+При его использовании данные помещаются **на ноде** в указанной папке.
+Этот тип очень удобен для демонстрации возможностей PersistentVolume.
  
 Проверим это
 ```shell script
