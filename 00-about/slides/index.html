@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/solarized.css">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<img src="images/00-title.jpg">
+				</section>
+				<section>
+					<h2>Kubernetes</h2>
+					<p>
+						Kubernetes — ...
+					</p>
+				</section>
+				<section>
+					<h1>Классическое приложение</h1>
+				</section>
+				<section>
+					<h2>Все на одном сервере</h2>
+					<img src="images/10-classic.png">
+				</section>
+				<section>
+					<section>
+						<h1>Масштабирование</h1>
+					</section>
+					<section>
+						<h2>Выносим БД</h2>
+						<img src="images/11-classic-db.png">
+					</section>
+					<section>
+						<h2>Весь сервер для приложения</h2>
+						<img src="images/12-classic-app.png">
+					</section>
+					<section>
+						<h2>Несколько серверов для приложения</h2>
+						<img src="images/13-classic-servers.png">
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>Новые сервисы</h1>
+					</section>
+					<section>
+						<h2>Добавляем 2 новых сервиса</h2>
+						<img src="images/20-new-services-1.png">
+						<p class="note">Выделяем для них новый сервер</p>
+					</section>
+					<section>
+						<h2>Масштабируем сервиса app2</h2>
+						<img src="images/21-new-services-scale.png">
+						<p class="note">Выделяем еще сервер</p>
+					</section>
+					<section>
+						<h2>Добавляем новый сервис</h2>
+						<img src="images/22-new-services-app4.png">
+						<p class="note">Выделяем еще сервер</p>
+					</section>
+					<section>
+						<h2>Увеличение требований к ресурсам сервиса app2</h2>
+						<img src="images/23-new-services-resources-up.png">
+						<p class="note">Для сервиса app3 понадобился новый сервер</p>
+					</section>
+					<section>
+						<h2>Добавляем новый сервис</h2>
+						<img src="images/24-new-services-add5.png">
+						<p class="note">Выделяем еще сервер</p>
+					</section>
+					<section>
+						<h2>Уменьшение требований к ресурсам сервиса app4</h2>
+						<img src="images/25-new-services-resources-down.png">
+						<p class="note">Возможно перемещение приложения app5 к app4</p>
+					</section>
+					<section>
+						<h2>Перемещаем сервис app5</h2>
+						<img src="images/26-new-services-move5.png">
+						<p class="note">Один из серверов освободился</p>
+					</section>
+					<section>
+						<h2>Выключаем освободившийся сервер</h2>
+						<img src="images/27-new-services-server-off.png">
+					</section>
+					<section>
+						<h2>Добавляем новый сервис...</h2>
+					</section>
+					<section>
+						<h2>Масштабируем существующий сервис...</h2>
+					</section>
+				</section>
+				<section>
+					<h2>Финальная схема</h2>
+					<img src="images/30-classic-final.png" style="height: 400px">
+					<p class="note">Несколько разных серверов</p>
+				</section>
+				<section>
+					<h2>Финальная?</h2>
+				</section>
+				<section>
+					<h2>Финальная схема...</h2>
+					<img src="images/31-classic-final-with-lb.png" style="height: 400px">
+				</section>
+				<section>
+					<h1>Сложно поддерживать</h1>
+				</section>
+				<section>
+					<h1>Что же делать?</h1>
+				</section>
+				<section>
+					<section>
+						<h2>Для каждого приложения отдельный сервер?</h2>
+						<ul>
+							<li class="fragment">Неоптимально по стоимости</li>
+							<li class="fragment">Неоптимально по производительности</li>
+							<li class="fragment">Сложно масштабировать</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Один огромный сервер?</h2>
+						<img src="images/32-cluster.png" style="height: 400px">
+						<p class="note">Выглядит неплохо, но...</p>
+					</section>
+					<section>
+						<h2>Один огромный сервер</h2>
+						<ul>
+							<li class="fragment">Единая точка отказа</li>
+							<li class="fragment">Дорого</li>
+							<li class="fragment">Сложно масштабировать</li>
+							<li class="fragment">Особенно вниз</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Как убрать недостатки?</h2>
+					</section>
+				</section>
+				<section>
+					<h2>Один огромный виртуальный сервер</h2>
+					<ul>
+						<li class="fragment strikeout">Единая точка отказа</li>
+						<li class="fragment">Соединим несколько недорогих серверов</li>
+						<li class="fragment strikeout">Дорого</li>
+						<li class="fragment strikeout">Сложно масштабировать</li>
+						<li class="fragment">Добавляем новый сервер при необходимости</li>
+						<li class="fragment strikeout">Особенно вниз</li>
+						<li class="fragment">Убираем новый сервер при необходимости</li>
+					</ul>
+				</section>
+				<section>
+					<section>
+						<h1>Что это за чудо такое?</h1>
+					</section>
+					<section>
+						<h1>Кластер</h1>
+						<p>
+							Кластер — группа компьютеров, объединённых высокоскоростными каналами связи, представляющая с точки зрения пользователя единый аппаратный ресурс.
+						</p>
+					</section>
+					<section>
+						<h2>Кластер</h2>
+						<ul>
+							<li class="fragment">Минимальная стоимость</li>
+							<li class="fragment">Легко масштабировать вверх</li>
+							<li class="fragment">... и вниз</li>
+							<li class="fragment">Нет единой точки отказа</li>
+							<li class="fragment">Нужна система управления кластером</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<h2>Kubernetes</h2>
+					<p>
+						Kubernetes — открытое программное обеспечение для оркестровки контейнеризированных приложений — автоматизации их развёртывания, масштабирования и координации в условиях кластера.
+					</p>
+				</section>
+				<section>
+					<h2>Kubernetes</h2>
+					<img src="images/32-cluster.png" style="height: 400px">
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>

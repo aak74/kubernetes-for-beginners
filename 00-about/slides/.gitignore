@@ -1,0 +1,6 @@
+/dist
+/js
+/plugin
+node_modules
+/css
+!/css/custom.css
