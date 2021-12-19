@@ -66,6 +66,8 @@ Control plane node - это управляющая нода.
 ## Подробнее о компонентах кластера Kubernetes
 Функционирование Kubernetes обеспечивается небольшим числом приложений. Такие приложения называются компонентами Kubernetes.
 
+![Компоненты кластера Kubernetes](./images/components-of-kubernetes.png)
+
 Вот набор этих приложений:
 - kube-apiserver
 - kube-controller-manager
