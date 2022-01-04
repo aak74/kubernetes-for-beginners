@@ -92,5 +92,6 @@ kubectl taint node master1 node-role.kubernetes.io/master-
 ### Демо
 ```shell script
 kubectl create deployment nginx --namespace default --image=nginx:latest --replicas=2
+kubectl create deployment mt --namespace default --image=praqma/network-multitool:alpine-extra --replicas=2
 ```
 
