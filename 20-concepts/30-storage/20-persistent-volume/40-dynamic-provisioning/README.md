@@ -57,7 +57,7 @@ helm repo add stable https://charts.helm.sh/stable && helm repo update
 # Установка nfs-server через helm 
 helm install nfs-server stable/nfs-server-provisioner
 
-# В дальнейшем при создании PVC, на подах может возникнуть следующая проблема (поды завистун в статусе ContainerCreating):
+# В дальнейшем при создании PVC, на подах может возникнуть следующая проблема (поды зависнут в статусе ContainerCreating):
 Output: mount: /var/lib/kubelet/pods/f760c19e-6ec0-46e8-9a3a-d6187fd927e8/volumes/kubernetes.io~nfs/pvc-d3134d79-c2ce-41a2-af72-0f2d45c5c19e:
 bad option; for several filesystems (e.g. nfs, cifs) you might need a /sbin/mount.<type> helper program.
 
