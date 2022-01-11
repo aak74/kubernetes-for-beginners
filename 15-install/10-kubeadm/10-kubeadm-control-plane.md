@@ -32,9 +32,14 @@ kubeadm init \
 
 ### Исправление ошибки
 ```shell script
-# При проверке возникнет ошибка. Исправим ее
-echo 1 > /proc/sys/net/ipv4/ip_forward
-modprobe br_netfilter 
+# При проверке возникнет ошибка. Исправим ее.
+# Для сохранения работоспособности после перезагрузки сервера выполним такие команды:
+echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
+echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf
+echo "net.bridge.bridge-nf-call-arptables=1" >> /etc/sysctl.conf
+echo "net.bridge.bridge-nf-call-ip6tables=1" >> /etc/sysctl.conf
+
+sysctl -p /etc/sysctl.conf
 ```
 
 ### Вторая попытка
@@ -141,8 +146,12 @@ crictl logs POD_ID
     sudo apt-get install -y kubelet kubeadm kubectl containerd
     sudo apt-mark hold kubelet kubeadm kubectl
 
-    echo 1 > /proc/sys/net/ipv4/ip_forward
-    modprobe br_netfilter 
+    echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
+    echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf
+    echo "net.bridge.bridge-nf-call-arptables=1" >> /etc/sysctl.conf
+    echo "net.bridge.bridge-nf-call-ip6tables=1" >> /etc/sysctl.conf
+    
+    sysctl -p /etc/sysctl.conf
 }
 ```
 ### Инициализация кластера
