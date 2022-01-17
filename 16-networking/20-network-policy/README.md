@@ -47,9 +47,9 @@ kubectl get po
 
 ### Проверка доступности между подами
 ```shell script
-kubectl exec backend-7b4877445f-kgvnr -- curl -s frontend
-kubectl exec backend-7b4877445f-kgvnr -- curl -s cache
-kubectl exec backend-7b4877445f-kgvnr -- curl -s backend
+kubectl exec backend-7b4877445f-kgvnr -- curl -s -m 1 frontend
+kubectl exec backend-7b4877445f-kgvnr -- curl -s -m 1 cache
+kubectl exec backend-7b4877445f-kgvnr -- curl -s -m 1 backend
 ```
 В случае отсутствия запретов все поды будут доступны. 
 Подобный эксперимент можно провести из любого из созданных подов.
@@ -84,9 +84,9 @@ kubectl get networkpolicies
 ### Проверка доступности между подами
 Проверим это по прежней схеме.
 ```shell script
-kubectl exec backend-7b4877445f-kgvnr -- curl -s frontend
-kubectl exec backend-7b4877445f-kgvnr -- curl -s cache
-kubectl exec backend-7b4877445f-kgvnr -- curl -s backend
+kubectl exec backend-7b4877445f-kgvnr -- curl -s -m 1 frontend
+kubectl exec backend-7b4877445f-kgvnr -- curl -s -m 1 cache
+kubectl exec backend-7b4877445f-kgvnr -- curl -s -m 1 backend
 ```
 
 После проверки можно увидеть, что 1 гипотеза снова подтвердилась.
