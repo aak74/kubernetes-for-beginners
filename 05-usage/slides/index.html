@@ -1,0 +1,306 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/solarized.css">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<img src="images/00-title.jpg">
+				</section>
+				<section>
+					<h2>Зачем нужен Kubernetes</h2>
+					<ul>
+						<li class="fragment">Выполнения полезной работы</li>
+						<li class="fragment">Распределение нагрузки между отдельными серверами</li>
+						<li class="fragment">Обеспечение доступа к переработанным данным снаружи кластера *</li>
+					</ul>
+					<p>
+				</section>
+				<section>
+					<h2>Замечание</h2>
+					<ul>
+						<li class="fragment">Все объекты Kubernetes описываются манифестами</li>
+						<li class="fragment">Важно понимать разницу между объектом и его описанием</li>
+						<li class="fragment">Объекты создаются в соответствии с описанием</li>
+					</ul>
+				</section>
+				<section>
+					<h1>Полезная нагрузка</h1>
+				</section>
+				<section>
+					<section>
+						<h3>Контейнер</h3>
+						<ul>
+							<li class="fragment">Docker популяризовал идею контейнеров</li>
+							<li class="fragment">Контейнеры предназначены для изолированного запуска полезной нагрузки</li>
+							<li class="fragment">В Kubernetes появляется понятие Pod</li>
+							<li class="fragment">Pod похож на контейнер, но это больше чем контейнер</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Pod</h3>
+						<ul>
+							<li class="fragment">Pod предназначен для выполнения вычислений (полезной работы)</li>
+							<li class="fragment">Pod в переводе с английского означает стручок, капсула. Стручок как известно содержит несколько бобов.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Pod</h3>
+						<ul>
+							<li class="fragment">Очень упрощенно pod - это один или несколько контейнеров</li>
+							<li class="fragment">Зачем нужно несколько контейнеров в одном поде?</li>
+							<li class="fragment">Это мы обсудим позже</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Схема Pod</h3>
+						<img src="images/10-pod.png">
+					</section>
+					<section>
+						<h3>Pod</h3>
+						<pre>
+							<code data-trim data-noescape>
+							# Под завершает свою работу едва стартовав
+							kubectl -n default run alpine --image=alpine
+
+							# Под завершит свою работу через 30 секунд
+							kubectl -n default run alpine2 --image=alpine -- sleep 30
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Pod</h3>
+						<ul>
+							<li>В контейнере обязательно должен быть запущен процесс</li>
+							<li class="fragment">Pod, как и контейнер временные по своей природе</li>
+							<li class="fragment">Поды могут создаваться и уничтожаться в любой момент времени</li>
+							<li class="fragment">Приложение внутри пода должно быть готово к этому</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Проблемы Pod-ов</h3>
+						<ul>
+							<li class="fragment">Временная природа</li>
+							<li class="fragment">Масштабирование</li>
+							<li class="fragment">Версионирование</li>
+							<li class="fragment">Для решения этой проблемы создан объект Deployment</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>Deployment</h1>
+					</section>
+					<section>
+						<h3>Назначение Deployment</h3>
+						<ul>
+							<li class="fragment">Автоматический запуск подов</li>
+							<li class="fragment">Масштабирование</li>
+							<li class="fragment">Версионирование</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Назначение Deployment</h3>
+						<p class="fragment">
+							На самом деле этим занимается kube-controller-manager
+						</p>
+						<p class="fragment">
+							Но для простоты можно пока опустить эту деталь
+						</p>
+					</section>
+					<section>
+						<h3>Схема Deployment</h3>
+						<img src="images/20-deployment.png" style="height: 400px">
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>Сеть</h1>
+					</section>
+					<section>
+						<h3>Сеть</h3>
+						<ul>
+							<li class="fragment">Полезная работа выполняется в подах</li>
+							<li class="fragment">Deployment контролирует заданное количество подов</li>
+							<li class="fragment">Достаточно ли этого для функционирования наших приложений?</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Сеть</h3>
+						<p>Для пода почти всегда требуются какие-то внешние ресурсы</p>
+						<ul>
+							<li class="fragment">БД</li>
+							<li class="fragment">Кэш</li>
+							<li class="fragment">Внутренний ресурс</li>
+							<li class="fragment">Внешний ресурс</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Пример</h3>
+						<img src="images/21-deployment-2.png" style="height: 400px">
+					</section>
+					<section>
+						<h3>Проблемы сетевого взаимодействия</h3>
+						<ul>
+							<li class="fragment">Нельзя обращаться по имени. Оно меняется</li>
+							<li class="fragment">Можно обращаться по IP</li>
+							<ul>
+								<li class="fragment">Как узнать IP?</li>
+								<li class="fragment">IP меняется</li>
+							</ul>
+							<li class="fragment">Не обеспечивается распределение нагрузки между подами</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Service</h3>
+						<ul>
+							<li class="fragment">Service по заданным правилам находит поды</li>
+							<li class="fragment">Service направляет трафик к поду</li>
+							<li class="fragment">Service распределяет трафик между подами</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Схема с объектом Service</h3>
+						<img src="images/30-service.png" style="height: 400px">
+					</section>
+					<section>
+						<h3>Service решил проблемы сетевого взаимодействия</h3>
+						<ul>
+							<li class="fragment">К подам можно обращаться по имени сервиса</li>
+							<li class="fragment">IP сервиса не меняется</li>
+							<li class="fragment">Распределяется нагрузка между подами</li>
+							<li class="fragment">Можно обеспечить доступ за пределы кластера (наружу)</li>
+							<li class="fragment">Можно обеспечить доступ из-за пределов кластера (внутрь)</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Service</h3>
+						<ul>
+							<li>Работает на 4 уровне OSI</li>
+							<li class="fragment">Для http, https нужно использовать 7 уровень OSI</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Сеть</h3>
+						<p>
+							Что вы знаете для работы на 7 уровне OSI?</li>
+						</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>Ingress</h1>
+					</section>
+					<section>
+						<h3>Схема с объектом Ingress</h3>
+						<img src="images/40-ingress.png" style="height: 400px">
+					</section>
+					<section>
+						<h3>Что такое Ingress?</h3>
+						<p class="fragment">
+							Для простоты можно говорить, что трафик в кластер Kubernetes по http(https) попадает через Ingress
+						</p>
+						<ul class="fragment">
+							<li>Работает на 7 уровне OSI</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Ingress</h3>
+						<ul>
+							<li class="strikeout">Работает на 7 уровне OSI</li>
+							<li class="fragment">Это конфиг для ingress controller</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Ingress controller</h3>
+						<ul>
+							<li>Работает на 7 уровне OSI</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Ingress controller</h3>
+						<ul>
+							<li class="strikeout">Работает на 7 уровне OSI</li>
+							<li class="fragment">Собирает общий конфиг Proxy из конфигов Ingress</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Proxy</h3>
+						<ul>
+							<li class="fragment">Работает на 7 уровне OSI</li>
+						</ul>
+						<p class="fragment">
+							Для простоты можно говорить, что трафик в кластер Kubernetes по http(https) попадает через Ingress
+						</p>
+					</section>
+					<section>
+						<h3>Схема с объектом Ingress</h3>
+						<img src="images/40-ingress.png" style="height: 400px">
+					</section>
+				</section>
+				<section>
+					<h3>Финальная схема</h3>
+					<img src="images/50-final.png" style="height: 400px">
+				</section>
+				<section>
+					<section>
+						<h1>Итоги</h1>
+					</section>
+					<section>
+						<h3>Pod</h3>
+						<p>
+							Pod - это набор контейнеров. Служит для выполнения вычислений. Внутри пода выполняется вся основная работа.
+						</p>
+					</section>
+					<section>
+						<h3>Deployment</h3>
+						<p>
+							Deployment - объект, который запускает необходимое количество подов. Служит для обеспечения отказоустойчивости и масштабирования вашего приложения.
+						</p>
+					</section>
+					<section>
+						<h3>Service</h3>
+						<p>
+							Service - обеспечивает сетевую связанность между приложениями в кластере. Может вести наружу кластера и внутрь кластера.
+						</p>
+					</section>
+					<section>
+						<h3>Ingress</h3>
+						<p>
+							Ingress - обеспечивает доступ внутрь кластера по URL.
+						</p>
+					</section>
+				</section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
