@@ -13,5 +13,8 @@ kubectl annotate <type> <label>
 - --all — обновление всех ресурсов в неймспейсе;
 
 
-
-
+## Пример использования аннотаций
+```shell
+# Устанавливает whitelist для доступа к ingress
+kubectl -n test annotate ingress demo nginx.ingress.kubernetes.io/whitelist-source-range=10.0.10.0/24
+```
