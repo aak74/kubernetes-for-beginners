@@ -4,7 +4,8 @@
   components: { // required
     hello: {
       indexData: 'hello baseline\n',
-      replicas: 1,
+      replicas: 3,
+      image: 'nginx',
     },
   },
 }

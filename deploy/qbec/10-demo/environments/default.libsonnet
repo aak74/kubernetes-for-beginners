@@ -5,8 +5,9 @@ local base = import './base.libsonnet';
 base {
   components +: {
     hello +: {
-      indexData: 'hello default\n',
-      replicas: 2,
+      indexData: 'hello default 42\n',
+      replicas: 8,
+      repl: 2,
     },
   }
 }

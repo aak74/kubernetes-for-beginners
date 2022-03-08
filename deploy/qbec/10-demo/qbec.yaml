@@ -5,9 +5,12 @@ metadata:
 spec:
   environments:
     default:
-      defaultNamespace: default
-      server: https://130.193.58.127:16443
+      defaultNamespace: test
+      server: https://10.0.10.108:6443
     stage:
-      defaultNamespace: default
-      server: https://130.193.58.100:16443
+      defaultNamespace: qbec
+      server: https://10.0.10.108:6443
+    prod:
+      defaultNamespace: qbec
+      server: https://10.0.10.108:6443
   vars: {}
