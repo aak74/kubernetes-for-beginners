@@ -34,6 +34,7 @@ kubeadm init \
 ```shell script
 # При проверке возникнет ошибка. Исправим ее.
 # Для сохранения работоспособности после перезагрузки сервера выполним такие команды:
+modprobe br_netfilter 
 echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
 echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf
 echo "net.bridge.bridge-nf-call-arptables=1" >> /etc/sysctl.conf
@@ -146,6 +147,7 @@ crictl logs POD_ID
     sudo apt-get install -y kubelet kubeadm kubectl containerd
     sudo apt-mark hold kubelet kubeadm kubectl
 
+    modprobe br_netfilter 
     echo "net.ipv4.ip_forward=1" >> /etc/sysctl.conf
     echo "net.bridge.bridge-nf-call-iptables=1" >> /etc/sysctl.conf
     echo "net.bridge.bridge-nf-call-arptables=1" >> /etc/sysctl.conf
