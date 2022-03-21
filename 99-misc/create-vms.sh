@@ -8,6 +8,7 @@ function create_vm {
   YC=$(cat <<END
     yc compute instance create \
       --name $NAME \
+      --hostname $NAME \
       --zone ru-central1-c \
       --network-interface subnet-name=default,nat-ip-version=ipv4 \
       --memory 2 \
@@ -22,4 +23,4 @@ END
 
 create_vm "cp1"
 create_vm "node1"
-#create_vm "node2"
+create_vm "node2"
