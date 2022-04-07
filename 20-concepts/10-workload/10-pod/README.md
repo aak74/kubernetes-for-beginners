@@ -93,10 +93,10 @@ nginx: [emerg] still could not bind()
 kubectl apply -f templates/40-pod-wo-errors.yaml
 
 # Обращение из контейнера multitool к контейнеру nginx внутри одного пода
-kubectl exec -it -c multitool pod-wo-errors -- curl localhost
+kubectl exec -c multitool pod-wo-errors -- curl localhost
 
 # Обращение из контейнера multitool к самому себе внутри одного пода
-kubectl exec -it -c multitool pod-wo-errors -- curl localhost:8080
+kubectl exec -c multitool pod-wo-errors -- curl localhost:8080
 ```
 
 В спецификации контейнера можно указывать порты, которые могут быть доступны снаружи.
