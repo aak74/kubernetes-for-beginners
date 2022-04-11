@@ -1,0 +1,51 @@
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: certs/cm.crt
+    server: https://prod.akop.pw:6443
+  name: prod
+- cluster:
+    certificate: base64-encoded-certificate
+    server: https://stage.akop.pw:16443
+  name: stage
+contexts:
+- context:
+    cluster: prod
+    namespace: processing
+    user: admin
+  name: prod
+- context:
+    cluster: stage
+    namespace: processing
+    user: stage-admin
+  name: stage
+current-context: stage
+kind: Config
+preferences: {}
+users:
+- name: admin
+  user:
+    client-certificate: certs/admin.crt
+    client-key: certs/admin.key
+- name: satge-admin
+  user:
+    password: jkdasljIYE7545jkl
+    username: admin
+- name: user
+  user:
+    client-certificate: certs/user.crt
+    client-key: certs/user.key
+- name: managed-kubernetes-admin
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      args:
+      - k8s
+      - create-token
+      - --profile=default
+      command: /home/akop/yandex-cloud/bin/yc
+      env: null
+- name: user-with-data
+  user:
+    client-certificate-data: base64-encoded-user-certificate
+    client-key-data: base64-encoded-user-private-key
