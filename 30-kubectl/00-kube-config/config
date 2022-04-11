@@ -5,7 +5,7 @@ clusters:
     server: https://prod.akop.pw:6443
   name: prod
 - cluster:
-    certificate: base64-encoded-certificate
+    certificate-authority-data: base64-encoded-certificate
     server: https://stage.akop.pw:16443
   name: stage
 contexts:
@@ -27,7 +27,7 @@ users:
   user:
     client-certificate: certs/admin.crt
     client-key: certs/admin.key
-- name: satge-admin
+- name: stage-admin
   user:
     password: jkdasljIYE7545jkl
     username: admin

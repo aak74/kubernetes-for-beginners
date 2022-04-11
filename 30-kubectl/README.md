@@ -20,7 +20,7 @@ kubectl describe nodes
 ```
 
 ## Детальная информация
-- [Конфиг](00-config.md)
+- [Конфиг](00-kube-config/README.md)
 - [Файлы](10-files.md)
 - [get](20-get.md)
 - [describe](25-describe.md)
