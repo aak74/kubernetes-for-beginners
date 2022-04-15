@@ -5,7 +5,7 @@
 # Release deploy
 helm install demo-release charts/01-simple
 kubectl get ns
-kubectl -n helm get deploy demo -o jsonpath={.spec.template.spec.containers[0].image}
+kubectl get deploy demo -o jsonpath={.spec.template.spec.containers[0].image}
 
 # Upgrade release
 helm upgrade demo-release charts/01-simple
