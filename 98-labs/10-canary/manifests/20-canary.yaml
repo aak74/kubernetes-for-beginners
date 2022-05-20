@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: index-canary
+  namespace: default
+data:
+  index.html: canary
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: canary
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: canary
+  template:
+    metadata:
+      labels:
+        app: canary
+    spec:
+      containers:
+        - image: nginx:1.20
+          imagePullPolicy: IfNotPresent
+          name: nginx-canary
+          ports:
+            - containerPort: 80
+              name: web
+              protocol: TCP
+          volumeMounts:
+            - name: index
+              mountPath: /usr/share/nginx/html
+      volumes:
+        - name: index
+          configMap:
+            name: index-canary
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: canary
+  namespace: default
+spec:
+  ports:
+    - name: web
+      port: 80
+  selector:
+    app: canary
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: default
+  name: canary
+  annotations:
+    nginx.ingress.kubernetes.io/canary: "true"
+    nginx.ingress.kubernetes.io/canary-by-cookie: canary
+spec:
+  rules:
+    - host: lab.akop.pw
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: canary
+                port:
+                  name: web

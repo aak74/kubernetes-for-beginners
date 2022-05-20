@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: index
+  namespace: default
+data:
+  index.html: stable
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stable
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stable
+  template:
+    metadata:
+      labels:
+        app: stable
+    spec:
+      containers:
+        - image: nginx:1.20
+          imagePullPolicy: IfNotPresent
+          name: nginx-stable
+          ports:
+            - containerPort: 80
+              name: web
+              protocol: TCP
+          volumeMounts:
+            - name: index
+              mountPath: /usr/share/nginx/html
+      volumes:
+        - name: index
+          configMap:
+            name: index
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stable
+  namespace: default
+spec:
+  ports:
+    - name: web
+      port: 80
+  selector:
+    app: stable
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: default
+  name: stable
+spec:
+  rules:
+    - host: lab.akop.pw
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: stable
+                port:
+                  name: web
