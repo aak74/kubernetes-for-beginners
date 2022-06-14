@@ -32,7 +32,7 @@
 ## Демо
 ```shell script
 # Создаем под
-kubectl apply -f templates/10-pod.yaml
+kubectl apply -f manifests/10-pod.yaml
 
 # Проверяем создан ли под
 kubectl get po
@@ -55,7 +55,7 @@ Events:
  
 Создадим его. 
 ```shell script
-kubectl apply -f templates/20-pvc.yaml
+kubectl apply -f manifests/20-pvc.yaml
 
 # Проверяем запущен ли под
 kubectl get po
@@ -89,7 +89,7 @@ watch 'kubectl get po,pvc'
 
 В первом окне терминала:
 ```shell script
-kubectl apply -f templates/30-pv.yaml
+kubectl apply -f manifests/30-pv.yaml
 
 # Примерно через минуту pod и PersistentVolumeClaim перейдут в желаемые статусы
 kubectl get po
@@ -149,7 +149,7 @@ kubectl get pv,pvc
 Пересоздадим под и убедимся, что в поде все так же доступны данные.
 ```shell script
 # Создаем под заново
-kubectl apply -f templates/10-pod.yaml
+kubectl apply -f manifests/10-pod.yaml
 
 # Проверяем доступность данных
 kubectl exec pod -- ls -la /static

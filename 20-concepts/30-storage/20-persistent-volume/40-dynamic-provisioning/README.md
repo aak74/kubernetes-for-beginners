@@ -72,8 +72,8 @@ watch 'kubectl get po,pvc,pv'
 ```
 
 ```shell script
-kubectl apply -f templates/10-pod.yaml
-kubectl apply -f templates/20-pvc.yaml
+kubectl apply -f manifests/10-pod.yaml
+kubectl apply -f manifests/20-pvc.yaml
 ```
 После этого будет создан PersistentVolume.
 Создана связка PersistentVolumeClaim-PersistentVolume.

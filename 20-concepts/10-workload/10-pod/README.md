@@ -45,7 +45,7 @@ Pod состоит из одного или нескольких контейн�
 
 ### Демо
 ```shell script
-kubectl apply -f templates/10-pod.yaml
+kubectl apply -f manifests/10-pod.yaml
 kubectl get pods
 kubectl get pods nginx -o yaml
 kubectl describe pods nginx
@@ -60,7 +60,7 @@ kubectl describe pods nginx | grep "^IP:"
 
 ### Демо
 ```shell script
-kubectl apply -f templates/30-pod-with-error.yaml
+kubectl apply -f manifests/30-pod-with-error.yaml
 
 kubectl get pods
 ```
@@ -90,7 +90,7 @@ nginx: [emerg] still could not bind()
 
 Проверим это:
 ```shell script
-kubectl apply -f templates/40-pod-wo-errors.yaml
+kubectl apply -f manifests/40-pod-wo-errors.yaml
 
 # Обращение из контейнера multitool к контейнеру nginx внутри одного пода
 kubectl exec -c multitool pod-wo-errors -- curl localhost
@@ -136,4 +136,4 @@ spec:
     name: nginx
 ```
 
-Другие примеры можно увидеть в папке `templates`. 
+Другие примеры можно увидеть в папке `manifests`. 

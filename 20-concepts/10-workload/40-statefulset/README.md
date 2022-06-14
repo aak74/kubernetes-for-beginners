@@ -23,4 +23,4 @@ kubectl get sts
 Например `grafana-5c8fb4c656-69qb2`.
 
 ## Пример манифеста StatefulSet
-Примеры можно увидеть в папке `templates`. 
+Примеры можно увидеть в папке `manifests`. 

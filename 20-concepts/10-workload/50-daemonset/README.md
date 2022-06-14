@@ -24,4 +24,4 @@ kubectl get ds
 Например `grafana-5c8fb4c656-69qb2`. Тут `grafana-5c8fb4c656` имя ReplicaSet.
 
 ## Пример манифеста DaemonSet
-Примеры можно увидеть в папке `templates`. 
+Примеры можно увидеть в папке `manifests`. 
