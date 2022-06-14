@@ -44,6 +44,35 @@ CONFIG_FILE=inventory/mycluster/hosts.yaml python3 contrib/inventory_builder/inv
 Билдер подготовит файл `inventory/mycluster/hosts.yaml`. Там будут прописаны адреса серверов, которые вы указали.
 Остальные настройки нужно делать самостоятельно.
 
+#### Пример hosts.yaml
+```yaml
+all:
+  hosts:
+    cp1:
+      ansible_host: 51.250.42.98
+      ansible_user: yc-user
+    node1:
+      ansible_host: 51.250.47.60
+      ansible_user: yc-user
+  children:
+    kube_control_plane:
+      hosts:
+        cp1:
+    kube_node:
+      hosts:
+        cp1:
+        node1:
+    etcd:
+      hosts:
+        cp1:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}
+```
+
 ### Конфигурация без запуска билдера 
 Далее необходимо отредактировать файл `inventory/mycluster/inventory.ini` в соответствии с вашими предпочтениями.
 
@@ -85,3 +114,9 @@ ansible-playbook -i inventory/mycluster/hosts.yml remove-node.yml -b -v \
   --private-key=~/.ssh/private_key \
   --extra-vars "node=nodename,nodename2
 ```
+
+## Доступ к кластеру
+Для доступа к кластеру извне нужно добавить параметр
+`supplementary_addresses_in_ssl_keys: [51.250.42.98]` в файл inventory/mycluster/group_vars/k8s_cluster/k8s-cluster.yml
+Заново запустить установку кластера.
+После этого кластер будет доступен извне.
