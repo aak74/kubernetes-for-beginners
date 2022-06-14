@@ -39,7 +39,7 @@ Docker-образы из этого репозитория содержит вс
 Для начала необходимо развернуть объекты из подготовленных манифестов.
 ```shell script
 # Развертывание
-kubectl apply -f ./templates/main/
+kubectl apply -f ./manifests/main/
 
 # Проверка созданных подов
 kubectl get po
@@ -58,7 +58,7 @@ kubectl exec backend-7b4877445f-kgvnr -- curl -s -m 1 backend
 
 ### Применение NetworkPolicy
 ```shell script
-kubectl apply -f ./templates/network-policy
+kubectl apply -f ./manifests/network-policy
 
 kubectl get networkpolicies
 ```
@@ -109,7 +109,7 @@ spec:
 
 Применим этот конфиг:
 ```shell script
-kubectl apply -f templates/network-policy/00-default.yaml
+kubectl apply -f manifests/network-policy/00-default.yaml
 ```
 
 Проверяем доступность подов между собой.
@@ -118,7 +118,7 @@ kubectl apply -f templates/network-policy/00-default.yaml
 ### Применение NetworkPolicy
 Применяем остальные наши сетевые политики. 
 ```shell script
-kubectl apply -f templates/network-policy
+kubectl apply -f manifests/network-policy
 ```
 
 Теперь проверим доступность между подами по прежней схеме.
