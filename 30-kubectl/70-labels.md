@@ -19,6 +19,7 @@ kubectl label <type> <label>
 ```shell script
 # Показать все ноды
 kubectl get nodes
+kubectl get nodes --show-labels
 
 # Поставить метку на ноду node1
 kubectl label node node1 test=db
@@ -31,7 +32,7 @@ kubectl get nodes node1 -o jsonpath='{.metadata.labels.test}'
 
 # Удаление метки
 kubectl label node node1 test-
-kubectl get nodes 10.0.10.100 -o jsonpath='{.metadata.labels}'
+kubectl get nodes node1 -o jsonpath='{.metadata.labels}'
 ``` 
 
 ## Необычное применение

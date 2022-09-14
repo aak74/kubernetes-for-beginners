@@ -6,7 +6,12 @@ metadata:
   name: multitool
   namespace: default
 spec:
-  replicas: 3
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
   selector:
     matchLabels:
       app: multitool
@@ -16,7 +21,7 @@ spec:
         app: multitool
     spec:
       containers:
-      - image: nginx:1.20
+      - image: nginx:1.19
         imagePullPolicy: IfNotPresent
         name: nginx
       - image: praqma/network-multitool:alpine-extra
@@ -25,3 +30,10 @@ spec:
         env:
           - name: HTTP_PORT
             value: "8080"
+        lifecycle:
+          postStart:
+            exec:
+              command: ["sleep", "10"]
+          preStop:
+            exec:
+              command: ["sleep", "30"]

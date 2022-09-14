@@ -96,7 +96,7 @@ kubectl apply -f manifests/40-pod-wo-errors.yaml
 kubectl exec -c multitool pod-wo-errors -- curl localhost
 
 # Обращение из контейнера multitool к самому себе внутри одного пода
-kubectl exec -c multitool pod-wo-errors -- curl localhost:8080
+kubectl exec -c nginx pod-wo-errors -- curl localhost:8080
 ```
 
 В спецификации контейнера можно указывать порты, которые могут быть доступны снаружи.

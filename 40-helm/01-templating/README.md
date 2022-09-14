@@ -33,6 +33,8 @@ helm template --set namespace=demo 01-simple
 
 # Сборка шаблона с переопределением двух параметров
 helm template --set namespace=demo,appPort=8080, 01-simple
+helm template --set namespace=demo --set appPort=8080 01-simple
+diff <(helm template 01-simple) <(helm template --set image.tag=1.18,replicaCount=2, 01-simple)
 
 # Сборка шаблона с переопределением параметра в файле
 helm template -f 01-simple/new-values.yaml 01-simple
@@ -72,8 +74,6 @@ helm template -f 01-simple/new-values.yaml 01-simple
 
 ## Функции шаблонизатора
 Известно около 50 функций шаблонизатора Helm. [Список функций](https://helm.sh/docs/chart_template_guide/function_list/).
-
-required - Требование наличия переменной. При ее отсутствии выводит сообщение.
 
 ## Именованные шаблоны
 [Именованные шаблоны](https://helm.sh/docs/chart_template_guide/named_templates/)

@@ -41,7 +41,7 @@ spec:
 
 ## Демо
 ```shell script
-kubectl apply -f templates/10-pod-int-volumes.yaml
+kubectl apply -f manifests/10-pod-int-volumes.yaml
 
 kubectl get pods
 
