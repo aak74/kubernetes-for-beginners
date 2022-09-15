@@ -1,6 +1,8 @@
 # Удаление PersistentVolume
 Теперь попробуем удалить PersistentVolume
 ```shell script
+kubectl get pv
+
 kubectl delete pv pv
 ```
 

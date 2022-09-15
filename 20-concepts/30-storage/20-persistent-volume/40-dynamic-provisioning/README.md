@@ -62,7 +62,7 @@ Output: mount: /var/lib/kubelet/pods/f760c19e-6ec0-46e8-9a3a-d6187fd927e8/volume
 bad option; for several filesystems (e.g. nfs, cifs) you might need a /sbin/mount.<type> helper program.
 
 # Решение проблемы (необходимо установить на всех нодах !!!):
-sudo apt install nfs-common - для debian/ubuntu
+sudo apt install nfs-common # для debian/ubuntu
 ```
 
 ## Демо
