@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+  namespace: lab1
+spec:
+  containers:
+    - image: nginx:1.20
+      imagePullPolicy: IfNotPresent
+      name: nginx
