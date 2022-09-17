@@ -61,7 +61,7 @@ Deployment предназначен для автоматического зап
 #### Демо
 ```shell script
 # Развертывание deployment
-kubectl apply -f templates/20-deployment-main.yaml
+kubectl apply -f manifests/20-deployment-main.yaml
 
 # После удаление пода будет создан новый под
 kubectl -n default delete pod main-
@@ -90,7 +90,7 @@ kubectl -n default scale --replicas=2 deploy main
 #### Демо
 ```shell script
 # Развертывание еще одного deployment 
-kubectl apply -f templates/21-deployment-resizer.yaml
+kubectl apply -f manifests/21-deployment-resizer.yaml
 
 # Проверяем созданные поды. У каждого пода собственное имя. "Родственные" поды объединены префиксами
 kubectl -n default get pod -o wide
@@ -135,11 +135,11 @@ Service может перенаправлять трафик с одного п�
 #### Демо
 ```shell script
 # Добавляем сервис
-kubectl apply -f templates/30-service-main.yaml
-kubectl apply -f templates/31-service-resizer.yaml
+kubectl apply -f manifests/30-service-main.yaml
+kubectl apply -f manifests/31-service-resizer.yaml
 
 # Добавляем сервис для доступа снаружи кластера
-kubectl apply -f templates/35-service-nodeport.yaml
+kubectl apply -f manifests/35-service-nodeport.yaml
 
 # Проверяем доступность сервиса снаружи кластера
 curl http://178.154.196.182:32180
@@ -152,11 +152,11 @@ Ingress содержит в себе описания доменных имен,
 #### Демо
 ```shell script
 # Добавляем сервис
-kubectl apply -f templates/30-service-main.yaml
-kubectl apply -f templates/31-service-resizer.yaml
+kubectl apply -f manifests/30-service-main.yaml
+kubectl apply -f manifests/31-service-resizer.yaml
 
 # Добавляем сервис для доступа снаружи кластера
-kubectl apply -f templates/35-service-nodeport.yaml
+kubectl apply -f manifests/35-service-nodeport.yaml
 
 # Сервис стал доступен снаружи кластера по привычному имени
 curl -k https://main.akop.pw
