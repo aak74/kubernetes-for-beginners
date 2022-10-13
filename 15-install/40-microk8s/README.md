@@ -26,6 +26,8 @@ microk8s status --wait-ready
 
 # Access Kubernetes
 microk8s kubectl get nodes
+
+microk8s enable dns ingress
 ```
 
 ## Управление microk8s кластером с помощью kubectl
