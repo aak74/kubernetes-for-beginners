@@ -1,0 +1,30 @@
+@startuml service-nodeport
+
+footer Kubernetes for beginners
+scale max 1024 width
+
+skinparam nodesep 10
+skinparam ranksep 10
+
+' Kubernetes
+!define KubernetesPuml https://raw.githubusercontent.com/dcasati/kubernetes-PlantUML/master/dist
+
+!includeurl KubernetesPuml/kubernetes_Common.puml
+!includeurl KubernetesPuml/kubernetes_Context.puml
+!includeurl KubernetesPuml/kubernetes_Simplified.puml
+
+!includeurl KubernetesPuml/OSS/KubernetesPod.puml
+!includeurl KubernetesPuml/OSS/KubernetesSvc.puml
+
+left to right direction
+
+actor User
+
+Cluster_Boundary(cluster, "Kubernetes Cluster") {
+  KubernetesSvc(svc, "service", ":30080")
+  KubernetesPod(pod_1, "pod\n10.244.1.11", "")
+  Rel(svc, pod_1," ")
+}
+
+User -d-> svc: :30080
+@enduml

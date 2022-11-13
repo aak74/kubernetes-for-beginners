@@ -33,7 +33,7 @@ microk8s enable dns ingress
 ## Управление microk8s кластером с помощью kubectl
 Удобно вместо связки `microk8s kubectl` использовать утилиту kubectl. Если она не установлена, то установите ее.
 
-[Инструкция](../../11-commands/00-kubectl-install.md) по установка kubectl.
+[Инструкция](../../../11-commands/00-kubectl-install.md) по установка kubectl.
 
 Для работы kubectl нужен конфиг `~/.kube/config`.
 

@@ -31,7 +31,8 @@ metadata:
   namespace: step1
 spec:
   containers:
-    - image: nginx:1.20
-      imagePullPolicy: IfNotPresent
-      name: nginx
+  - image: praqma/network-multitool:alpine-extra
+    imagePullPolicy: IfNotPresent
+    name: multitool
+
 ```
