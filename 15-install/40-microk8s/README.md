@@ -1,1 +1,0 @@
-/home/andrey/projects/kubernetes-for-beginners/00-step-by-step/10-install-microk8s/README.md

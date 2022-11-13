@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: step1
+spec:
+  ports:
+    - name: web
+      port: 80
+  selector:
+    app: frontend
+  type: ClusterIP
