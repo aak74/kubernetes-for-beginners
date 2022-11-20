@@ -28,7 +28,6 @@ kubectl config get-contexts
 kubectl config current-context
 
 # Переключение текущего контекста
-kubectl config set current-context yc
 kubectl config use-context prod
 
 # Установка доступов

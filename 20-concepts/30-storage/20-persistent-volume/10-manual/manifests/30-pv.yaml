@@ -10,3 +10,4 @@ spec:
     storage: 2Gi
   hostPath:
     path: /data/pv
+  persistentVolumeReclaimPolicy: Delete

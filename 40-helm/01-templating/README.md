@@ -29,11 +29,11 @@ helm lint first
 Переменные могут быть переопределены с помощью флага --set. И с помощью другого файла.
 ```shell script
 # Сборка шаблона с переопределением параметра
-helm template --set namespace=demo 01-simple
+helm template --set replicaCount=3 01-simple
 
 # Сборка шаблона с переопределением двух параметров
-helm template --set namespace=demo,appPort=8080, 01-simple
-helm template --set namespace=demo --set appPort=8080 01-simple
+helm template --set replicaCount=3,appPort=8080, 01-simple
+helm template --set replicaCount=3 --set appPort=8080 01-simple
 diff <(helm template 01-simple) <(helm template --set image.tag=1.18,replicaCount=2, 01-simple)
 
 # Сборка шаблона с переопределением параметра в файле

@@ -1,7 +1,6 @@
 {
-  "namespace": "json",
   "resources": {
-    "limit": {
+    "limits": {
       "cpu": "200m",
       "memory": "512Mb"
     },

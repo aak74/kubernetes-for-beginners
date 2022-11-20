@@ -1,4 +1,4 @@
 image:
   tag: "latest"
 
-namespace: new2
+replicaCount: 4
